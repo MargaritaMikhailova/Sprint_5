@@ -77,7 +77,7 @@ class TestRegistration:
         wait = WebDriverWait(driver, 60, ignored_exceptions=[StaleElementReferenceException])
 
         email_field = wait.until(expected_conditions.element_to_be_clickable(Auth_user.EMAIL_USER))
-        email_field.send_keys("user1234@ya.ru")
+        email_field.send_keys("user1235@ya.ru")
         password_field = wait.until(expected_conditions.element_to_be_clickable(Auth_user.PASSWORD_USER))
         password_field.send_keys("Aa12345")
         submit_field = wait.until(expected_conditions.element_to_be_clickable(Auth_user.SUBMIT_PASSWORD))

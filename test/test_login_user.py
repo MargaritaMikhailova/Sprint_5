@@ -11,15 +11,19 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from locators import *
 
+
 class TestLoginUser:
 
 # Выполнить авторизацию
     def test_login_user(self,driver):
+        wait = WebDriverWait(driver, 20)
 
-        driver.find_element(*Buttons.LOGIN_BUTTON).click()
+        wait.until(EC.element_to_be_clickable(Buttons.LOGIN_BUTTON)).click()
 
-        driver.find_element(*Auth_user.EMAIL_USER).send_keys("user1234@ya.ru")
-        driver.find_element(*Auth_user.PASSWORD_USER).send_keys("Aa12345")
+        email = wait.until(expected_conditions.element_to_be_clickable(Auth_user.EMAIL_USER))
+        email.send_keys("user1234@ya.ru")
+        password = wait.until(expected_conditions.element_to_be_clickable(Auth_user.PASSWORD_USER))
+        password.send_keys("Aa12345")
 
         driver.find_element(*Buttons.LOGIN_USER).click()
 
