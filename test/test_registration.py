@@ -10,7 +10,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from locators import *
 from selenium.common.exceptions import StaleElementReferenceException
 from helpers import generate_email
-
+from data import TestData
 
 class TestRegistration:
 
@@ -30,9 +30,9 @@ class TestRegistration:
         email_test = wait.until(expected_conditions.element_to_be_clickable(Auth_user.EMAIL_USER))
         email_test.send_keys(email)
         password_test = wait.until(expected_conditions.element_to_be_clickable(Auth_user.PASSWORD_USER))
-        password_test.send_keys("Aa12345")
+        password_test.send_keys(TestData.VALID_PASS)
         submit_test = wait.until(expected_conditions.element_to_be_clickable(Auth_user.SUBMIT_PASSWORD))
-        submit_test.send_keys("Aa12345")
+        submit_test.send_keys(TestData.VALID_PASS)
 
         create_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable(Buttons.CREATE_ACCOUNT))
         create_button.click()
@@ -53,11 +53,11 @@ class TestRegistration:
         
 
         email = wait.until(expected_conditions.element_to_be_clickable(Auth_user.EMAIL_USER))
-        email.send_keys("test.test")
+        email.send_keys(TestData.INVALID_EMAIL)
         password = wait.until(expected_conditions.element_to_be_clickable(Auth_user.PASSWORD_USER))
-        password.send_keys("Aa12345")
+        password.send_keys(TestData.VALID_PASS)
         submit = wait.until(expected_conditions.element_to_be_clickable(Auth_user.SUBMIT_PASSWORD))
-        submit.send_keys("Aa12345")
+        submit.send_keys(TestData.VALID_PASS)
 
         create_button = WebDriverWait(driver, 60).until(EC.element_to_be_clickable(Buttons.CREATE_ACCOUNT))
         create_button.click()
@@ -77,11 +77,11 @@ class TestRegistration:
         wait = WebDriverWait(driver, 60, ignored_exceptions=[StaleElementReferenceException])
 
         email_field = wait.until(expected_conditions.element_to_be_clickable(Auth_user.EMAIL_USER))
-        email_field.send_keys("user1235@ya.ru")
+        email_field.send_keys(TestData.EXSIST_EMAIL)
         password_field = wait.until(expected_conditions.element_to_be_clickable(Auth_user.PASSWORD_USER))
-        password_field.send_keys("Aa12345")
+        password_field.send_keys(TestData.VALID_PASS)
         submit_field = wait.until(expected_conditions.element_to_be_clickable(Auth_user.SUBMIT_PASSWORD))
-        submit_field.send_keys("Aa12345")
+        submit_field.send_keys(TestData.VALID_PASS)
 
         create_button = WebDriverWait(driver, 60).until(EC.element_to_be_clickable(Buttons.CREATE_ACCOUNT))
         create_button.click()

@@ -10,6 +10,7 @@ from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from locators import *
+from data import TestData
 
 
 class TestLoginUser:
@@ -21,9 +22,9 @@ class TestLoginUser:
         wait.until(EC.element_to_be_clickable(Buttons.LOGIN_BUTTON)).click()
 
         email = wait.until(expected_conditions.element_to_be_clickable(Auth_user.EMAIL_USER))
-        email.send_keys("user1234@ya.ru")
+        email.send_keys(TestData.USER_2)
         password = wait.until(expected_conditions.element_to_be_clickable(Auth_user.PASSWORD_USER))
-        password.send_keys("Aa12345")
+        password.send_keys(TestData.VALID_PASS)
 
         driver.find_element(*Buttons.LOGIN_USER).click()
 

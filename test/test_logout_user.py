@@ -8,6 +8,7 @@ from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from locators import *
+from data import TestData
 
 
 class TestLogoutUser:
@@ -17,8 +18,8 @@ class TestLogoutUser:
 
         login_user = WebDriverWait(driver, 10).until(expected_conditions.visibility_of_element_located(Buttons.LOGIN_BUTTON)).click()
 
-        driver.find_element(*Auth_user.EMAIL_USER).send_keys("user1234@ya.ru")
-        driver.find_element(*Auth_user.PASSWORD_USER).send_keys("Aa12345")
+        driver.find_element(*Auth_user.EMAIL_USER).send_keys(TestData.USER_2)
+        driver.find_element(*Auth_user.PASSWORD_USER).send_keys(TestData.VALID_PASS)
 
         driver.find_element(*Buttons.LOGIN_USER).click()
 

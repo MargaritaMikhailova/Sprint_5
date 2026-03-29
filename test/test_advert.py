@@ -10,7 +10,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from locators import *
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.common.exceptions import StaleElementReferenceException
-
+from data import TestData
 
 class TestAdvert:
 
@@ -40,8 +40,8 @@ class TestAdvert:
         login_user = WebDriverWait(driver, 180).until(expected_conditions.visibility_of_element_located(Buttons.LOGIN_BUTTON)).click()
 
         email = wait.until(expected_conditions.element_to_be_clickable(Auth_user.EMAIL_USER))
-        email.send_keys("user923@ya.ru")
-        driver.find_element(*Auth_user.PASSWORD_USER).send_keys("Aa12345")
+        email.send_keys(TestData.TEST_EMAIL)
+        driver.find_element(*Auth_user.PASSWORD_USER).send_keys(TestData.VALID_PASS)
 
         driver.find_element(*Buttons.LOGIN_USER).click()
 
