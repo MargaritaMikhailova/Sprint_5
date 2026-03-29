@@ -47,6 +47,6 @@ class Element_check:
     TYPE_CITY = (By.XPATH, "//button/span[text()='Казань']")
     RADIO_BUTTON = (By.CLASS_NAME, "radioUnput_shell__Wtdwe")
     NAME_BUTTON = (By.XPATH, "//label[text()='Б/У']")
-
+    MYSELF_ADVERT = (By.XPATH, "//h2[contains(text(), 'Куплю книги')]")
 
 

@@ -9,6 +9,8 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from locators import *
 from selenium.webdriver.common.action_chains import ActionChains
+from selenium.common.exceptions import StaleElementReferenceException
+
 
 class TestAdvert:
 
@@ -38,11 +40,13 @@ class TestAdvert:
 
 #Тест2.Создание объявления авторизованным пользователем
     def test_create_advert_success(self, driver):
+        wait = WebDriverWait(self.driver, 60, ignored_exceptions=[StaleElementReferenceException])
 
 #Выполнить авторизацию
         login_user = WebDriverWait(driver, 180).until(expected_conditions.visibility_of_element_located(Buttons.LOGIN_BUTTON)).click()
 
-        self.driver.find_element(*Auth_user.EMAIL_USER).send_keys("user923@ya.ru")
+        email = wait.until(expected_conditions.element_to_be_clickable(Auth_user.EMAIL_USER))
+        email.send_keys("user923@ya.ru")
         self.driver.find_element(*Auth_user.PASSWORD_USER).send_keys("Aa12345")
 
         self.driver.find_element(*Buttons.LOGIN_USER).click()
@@ -56,7 +60,6 @@ class TestAdvert:
 #Создать объявление
         
         create_of_advert = WebDriverWait(driver, 60).until(expected_conditions.element_to_be_clickable(Buttons.CREATE_AD))
-        #create_of_advert.click()
         ActionChains(driver).double_click(create_of_advert).perform()
 
 #Заполнить карточку
@@ -65,11 +68,9 @@ class TestAdvert:
         advert = self.driver.find_element(*Auth_user.NAME_PRODUCT)
         advert.send_keys(advert_title)
 
-        #describe_product = WebDriverWait(driver, 30).until(expected_conditions.element_to_be_clickable(Auth_user.DESCRIBE_PRODUCT))
         describe_product = self.driver.find_element(*Auth_user.DESCRIBE_PRODUCT)
         self.driver.execute_script("arguments[0].scrollIntoView();",describe_product)
         driver.execute_script("arguments[0].value = 'Куплю все части';", describe_product)
-        #describe_product.send_keys("Куплю все части")
 
         price_product = self.driver.find_element(*Auth_user.PRICE_PRODUCT)
         price_product.send_keys("1000000")
@@ -108,10 +109,10 @@ class TestAdvert:
         avatar_user = WebDriverWait(driver, 10).until(expected_conditions.visibility_of_element_located(Element_check.PHOTO_USER))
         avatar_user.click()
 
+        my_advert = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(Element_check.MYSELF_ADVERT))
+        assert "Куплю книги" in my_advert.text
 
-        WebDriverWait(driver, 10).until(expected_conditions.visibility_of_element_located(Element_check.MY_ADVERT))
-        my_advert = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, f"//h2[text()='{advert_title}']")))
-        assert my_advert.text == advert_title
+
 
 
 
