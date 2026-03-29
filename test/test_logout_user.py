@@ -12,21 +12,15 @@ from locators import *
 
 class TestLogoutUser:
 
-    @pytest.fixture(autouse=True)
-    def setup(self, driver):
-        self.driver = driver
-
-        yield
-
 # Выполнить авторизацию
     def test_user_login(self,driver):
 
         login_user = WebDriverWait(driver, 10).until(expected_conditions.visibility_of_element_located(Buttons.LOGIN_BUTTON)).click()
 
-        self.driver.find_element(*Auth_user.EMAIL_USER).send_keys("user1234@ya.ru")
-        self.driver.find_element(*Auth_user.PASSWORD_USER).send_keys("Aa12345")
+        driver.find_element(*Auth_user.EMAIL_USER).send_keys("user1234@ya.ru")
+        driver.find_element(*Auth_user.PASSWORD_USER).send_keys("Aa12345")
 
-        self.driver.find_element(*Buttons.LOGIN_USER).click()
+        driver.find_element(*Buttons.LOGIN_USER).click()
 
 #Проверить произошёл переход на главную страницу и отображается аватар пользователя и имя User.
         page_main = WebDriverWait(driver, 10).until(expected_conditions.visibility_of_element_located(Element_check.MAIN_PAGE))
@@ -42,7 +36,7 @@ class TestLogoutUser:
         assert name.text == "User."
 
 #Выйти из приложения
-        self.driver.find_element(*Buttons.LOGOUT_USER).click()
+        driver.find_element(*Buttons.LOGOUT_USER).click()
 
 #Проверить, что аватар и User больше не отображаются
         WebDriverWait(driver, 10).until(expected_conditions.visibility_of_element_located(Element_check.MAIN_PAGE))

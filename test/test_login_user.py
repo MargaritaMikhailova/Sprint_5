@@ -13,21 +13,15 @@ from locators import *
 
 class TestLoginUser:
 
-    @pytest.fixture(autouse=True)
-    def setup(self, driver):
-        self.driver = driver
-
-        yield
-
 # Выполнить авторизацию
     def test_login_user(self,driver):
 
-        self.driver.find_element(*Buttons.LOGIN_BUTTON).click()
+        driver.find_element(*Buttons.LOGIN_BUTTON).click()
 
-        self.driver.find_element(*Auth_user.EMAIL_USER).send_keys("user1234@ya.ru")
-        self.driver.find_element(*Auth_user.PASSWORD_USER).send_keys("Aa12345")
+        driver.find_element(*Auth_user.EMAIL_USER).send_keys("user1234@ya.ru")
+        driver.find_element(*Auth_user.PASSWORD_USER).send_keys("Aa12345")
 
-        self.driver.find_element(*Buttons.LOGIN_USER).click()
+        driver.find_element(*Buttons.LOGIN_USER).click()
 
 
 #Проверить произошёл переход на главную страницу и отображается аватар пользователя и имя User.
