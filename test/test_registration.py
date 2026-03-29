@@ -9,6 +9,8 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from locators import *
 from selenium.common.exceptions import StaleElementReferenceException
+from helpers import generate_email
+
 
 class TestRegistration:
 
@@ -19,9 +21,9 @@ class TestRegistration:
         wait.until(EC.element_to_be_clickable(Buttons.REGISTER_BUTTON)).click()
 
 #Тест1. Регистрация пользователя успешная
-    def test_success_registration(self,driver,generate_email):
+    def test_success_registration(self,driver):
         wait = WebDriverWait(driver, 60, ignored_exceptions=[StaleElementReferenceException])
-        email = generate_email
+        email = generate_email()
 
 # Выполнить авторизацию
 
