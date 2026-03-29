@@ -21,9 +21,7 @@ class TestLogoutUser:
 # Выполнить авторизацию
     def test_user_login(self,driver):
 
-        time.sleep(3)
-
-        self.driver.find_element(*Buttons.LOGIN_BUTTON).click()
+        login_user = WebDriverWait(driver, 10).until(expected_conditions.visibility_of_element_located(Buttons.LOGIN_BUTTON)).click()
 
         self.driver.find_element(*Auth_user.EMAIL_USER).send_keys("user1234@ya.ru")
         self.driver.find_element(*Auth_user.PASSWORD_USER).send_keys("Aa12345")
@@ -49,14 +47,11 @@ class TestLogoutUser:
 #Проверить, что аватар и User больше не отображаются
         WebDriverWait(driver, 10).until(expected_conditions.visibility_of_element_located(Element_check.MAIN_PAGE))
 
-        card_of_announcement = driver.find_element(*Buttons.CREATE_AD)
-        WebDriverWait(driver, 10).until(expected_conditions.visibility_of(card_of_announcement))
+        card_of_announcement = WebDriverWait(driver, 10).until(expected_conditions.visibility_of_element_located(Buttons.CREATE_AD))
         assert card_of_announcement.is_displayed()
 
-        time.sleep(3)
-
-        photo_user = driver.find_elements(*Element_check.AVATAR_PHOTO)
-        assert len(photo_user) == 0
+        photo_user = WebDriverWait(driver, 10).until(expected_conditions.invisibility_of_element_located(Element_check.AVATAR_PHOTO))
+        assert photo_user is True
 
         name_user = driver.find_elements(*Element_check.USER_NAME_CHECK)
         assert len(name_user) == 0

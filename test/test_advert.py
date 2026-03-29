@@ -8,6 +8,7 @@ from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from locators import *
+from selenium.webdriver.common.action_chains import ActionChains
 
 class TestAdvert:
 
@@ -24,8 +25,6 @@ class TestAdvert:
 
         WebDriverWait(driver, 10).until(expected_conditions.visibility_of_element_located(Element_check.MAIN_PAGE))
 
-        time.sleep(3)
-
         card_of_announcement = self.driver.find_element(*Buttons.CREATE_AD)
         WebDriverWait(driver, 10).until(expected_conditions.element_to_be_clickable(card_of_announcement))
 
@@ -41,63 +40,55 @@ class TestAdvert:
     def test_create_advert_success(self, driver):
 
 #Выполнить авторизацию
-        self.driver.find_element(*Buttons.LOGIN_BUTTON).click()
+        login_user = WebDriverWait(driver, 180).until(expected_conditions.visibility_of_element_located(Buttons.LOGIN_BUTTON)).click()
 
-        time.sleep(3)
-
-        self.driver.find_element(*Auth_user.EMAIL_USER).send_keys("user922@ya.ru")
+        self.driver.find_element(*Auth_user.EMAIL_USER).send_keys("user923@ya.ru")
         self.driver.find_element(*Auth_user.PASSWORD_USER).send_keys("Aa12345")
-
-##time.sleep(3)
 
         self.driver.find_element(*Buttons.LOGIN_USER).click()
 
 
 #Проверить произошёл переход на главную страницу
-        WebDriverWait(driver, 10).until(expected_conditions.visibility_of_element_located(Element_check.MAIN_PAGE))
+        main_page = WebDriverWait(driver, 180).until(expected_conditions.visibility_of_element_located(Element_check.MAIN_PAGE))
+        assert main_page.is_displayed()
 
-        time.sleep(3)
 
 #Создать объявление
-        create_of_advert = self.driver.find_element(*Buttons.CREATE_AD)
-        WebDriverWait(driver, 10).until(expected_conditions.element_to_be_clickable(create_of_advert))
-
-        create_of_advert.click()
-
-##time.sleep(3)
+        
+        create_of_advert = WebDriverWait(driver, 60).until(expected_conditions.element_to_be_clickable(Buttons.CREATE_AD))
+        #create_of_advert.click()
+        ActionChains(driver).double_click(create_of_advert).perform()
 
 #Заполнить карточку
         advert_title = f"Куплю книги {random.randint(1000, 9999)} Гарри Поттера"
 
-        advert = driver.find_element(By.NAME, "name")
+        advert = self.driver.find_element(*Auth_user.NAME_PRODUCT)
         advert.send_keys(advert_title)
 
+        #describe_product = WebDriverWait(driver, 30).until(expected_conditions.element_to_be_clickable(Auth_user.DESCRIBE_PRODUCT))
         describe_product = self.driver.find_element(*Auth_user.DESCRIBE_PRODUCT)
         self.driver.execute_script("arguments[0].scrollIntoView();",describe_product)
-        describe_product.send_keys("Куплю все части")
+        driver.execute_script("arguments[0].value = 'Куплю все части';", describe_product)
+        #describe_product.send_keys("Куплю все части")
 
         price_product = self.driver.find_element(*Auth_user.PRICE_PRODUCT)
         price_product.send_keys("1000000")
 
 # Открываем выпадающий список и выбираем категорию
-        dropdown_list_product = WebDriverWait(driver, 10).until(EC.element_to_be_clickable(Element_check.LIST))
+        dropdown_list_product = WebDriverWait(driver, 10).until(expected_conditions.element_to_be_clickable(Element_check.LIST))
         dropdown_list_product.click()
         type_product = self.driver.find_element(*Element_check.TYPE_PRODUCT)
         self.driver.execute_script("arguments[0].click();", type_product)
         selected = self.driver.find_element(*Element_check.DROPDOWN_LIST)
-
-        time.sleep(3)
 
         category_product = self.driver.find_element(*Auth_user.CATEGORY_PRODUCT)
         assert category_product.get_attribute("value") == "Книги"
 
         dpopdown_list_city = WebDriverWait(driver, 10).until(EC.presence_of_all_elements_located(Element_check.LIST))
         dpopdown_list_city[1].click()
-        time.sleep(3)
         city_product = self.driver.find_element(*Element_check.TYPE_CITY)
         self.driver.execute_script("arguments[0].click();", city_product)
         selected_city = self.driver.find_element(*Element_check.DROPDOWN_LIST)
-        #time.sleep(3)
         category_city = self.driver.find_element(*Auth_user.CATEGORY_CITY)
         assert category_city.get_attribute("value") == "Казань"
 
@@ -113,7 +104,6 @@ class TestAdvert:
 #Проверить, что отобржается созданное объявление
         WebDriverWait(driver, 10).until(expected_conditions.visibility_of_element_located(Element_check.MAIN_PAGE))
 
-        time.sleep(3)
 
         avatar_user = WebDriverWait(driver, 10).until(expected_conditions.visibility_of_element_located(Element_check.PHOTO_USER))
         avatar_user.click()

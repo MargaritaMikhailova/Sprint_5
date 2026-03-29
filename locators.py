@@ -21,10 +21,11 @@ class Auth_user:
     EMAIL_USER = (By.NAME, "email")
     PASSWORD_USER = (By.NAME, "password")
     SUBMIT_PASSWORD = (By.NAME, "submitPassword")
-    DESCRIBE_PRODUCT = (By.CLASS_NAME, "textarea_inputStandart__IoNxq")
+    DESCRIBE_PRODUCT = (By.NAME, "description")
     PRICE_PRODUCT = (By.NAME, "price")
     CATEGORY_PRODUCT = (By.NAME, "category")
     CATEGORY_CITY = (By.NAME, "city")
+    NAME_PRODUCT = (By.CLASS_NAME, "input_inputStandart__JweLZ")
 
 
 #Элементы проверок

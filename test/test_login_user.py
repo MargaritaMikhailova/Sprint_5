@@ -22,8 +22,6 @@ class TestLoginUser:
 # Выполнить авторизацию
     def test_login_user(self,driver):
 
-        time.sleep(3)
-
         self.driver.find_element(*Buttons.LOGIN_BUTTON).click()
 
         self.driver.find_element(*Auth_user.EMAIL_USER).send_keys("user1234@ya.ru")
