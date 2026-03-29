@@ -21,6 +21,5 @@ def driver():
 @pytest.fixture
 def generate_email():
 
-    import random
     return f"user{random.randint(1000, 9999)}@test.ru"
 
