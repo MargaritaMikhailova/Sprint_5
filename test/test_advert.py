@@ -28,8 +28,6 @@ class TestAdvert:
 
         WebDriverWait(driver, 10).until(expected_conditions.visibility_of_element_located(Element_check.CHECK_AUTH))
         popup_warning = driver.find_element(*Element_check.CHECK_AUTH)
-        assert popup_warning.is_displayed()
-        print("Чтобы разместить объявление, авторизуйтесь")
 
 #Тест2.Создание объявления авторизованным пользователем
     def test_create_advert_success(self, driver):
@@ -47,7 +45,7 @@ class TestAdvert:
 
 #Проверить произошёл переход на главную страницу
         main_page = WebDriverWait(driver, 180).until(expected_conditions.visibility_of_element_located(Element_check.MAIN_PAGE))
-        assert main_page.is_displayed()
+    
 
 
 #Создать объявление

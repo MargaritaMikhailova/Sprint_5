@@ -27,7 +27,6 @@ class TestLoginUser:
 
 #Проверить произошёл переход на главную страницу и отображается аватар пользователя и имя User.
         main_page = WebDriverWait(driver, 10).until(expected_conditions.visibility_of_element_located(Element_check.MAIN_PAGE))
-        assert main_page.is_displayed()
 
         card_of_announcement = driver.find_element(*Buttons.CREATE_AD)
         WebDriverWait(driver, 10).until(expected_conditions.visibility_of(card_of_announcement))
