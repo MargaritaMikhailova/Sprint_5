@@ -1,5 +1,3 @@
-import random
-import time
 import pytest
 
 from selenium import webdriver
@@ -15,11 +13,14 @@ class TestLogoutUser:
 
 # Выполнить авторизацию
     def test_user_login(self,driver):
+        wait = WebDriverWait(driver, 20)
 
         login_user = WebDriverWait(driver, 10).until(expected_conditions.visibility_of_element_located(Buttons.LOGIN_BUTTON)).click()
 
-        driver.find_element(*Auth_user.EMAIL_USER).send_keys(TestData.USER_2)
-        driver.find_element(*Auth_user.PASSWORD_USER).send_keys(TestData.VALID_PASS)
+        email = wait.until(expected_conditions.element_to_be_clickable(Auth_user.EMAIL_USER))
+        email.send_keys(TestData.USER_2)
+        password = wait.until(expected_conditions.element_to_be_clickable(Auth_user.PASSWORD_USER))
+        password.send_keys(TestData.VALID_PASS)
 
         driver.find_element(*Buttons.LOGIN_USER).click()
 
